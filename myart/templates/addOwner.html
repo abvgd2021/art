@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Add AOwner</title>
+</head>
+<body>
+    <script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+    </script>
+    <p><a href="/">На главную</a></p>
+    <form method="POST">
+        {% csrf_token %}
+    <table>
+        {{ form }}
+    </table>
+    <input type="submit" value="Добавить" >
+	{% if owners.count > 0 %}
+    <h2>Список владельцев выставочных залов</h2>
+    <table>
+        <tr><th>Имя/Название</th><th>Статус</th><th>Телефон</th><th>Адрес</th><th></th></tr>
+        {% for owner in owners %}
+        <tr><td>{{ owner.name }}</td><td>{{ owner.status }}</td><td>{{ owner.phone }}</td><td>{{ owner.address }}</td><td><a href="editOwner/{{owner.id}}">Изменить</a> | <a href="deleteOwner/{{owner.id}}">Удалить</a></td></tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</body>
+</html>

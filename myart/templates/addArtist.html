@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Add Artist</title>
+</head>
+<body>
+    <script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+    </script>
+	<p><a href="/">На главную</a></p>
+    <form method="POST">
+        {% csrf_token %}
+    <table>
+        {{ form }}
+    </table>
+    <input type="submit" value="Добавить" >
+	{% if artists.count > 0 %}
+    <h2>Список художников</h2>
+    <table>
+        <tr><th>Имя</th><th>Фамилия</th><th>Дата рождения</th><th>Место рождения</th><th>Биография</th><th>Образование</th><th></th></tr>
+        {% for artist in artists %}
+        <tr><td>{{ artist.first_name }}</td><td>{{ artist.last_name }}</td><td>{{ artist.birthday }}</td><td>{{ artist.birthplace }}</td><td width="400">{{ artist.bio }}</td><td width="100">{{ artist.edu }}</td><td><a href="editArtist/{{artist.id}}">Изменить</a> | <a href="deleteArtist/{{artist.id}}">Удалить</a></td></tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Add Showroom</title>
+</head>
+<body>
+    <script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+    </script>
+	<p><a href="/">На главную</a></p>
+    <form method="POST">
+        {% csrf_token %}
+    <table>
+        {{ form }}
+    </table>
+    <input type="submit" value="Добавить" >
+	{% if showrooms.count > 0 %}
+    <h2>Список выставочных залов</h2>
+    <table>
+        <tr><th>Название</th><th>Площадь</th><th>Телефон</th><th>Адрес</th><th>Владелец</th><th></th></tr>
+        {% for showroom in showrooms %}
+        <tr><td>{{ showroom.name }}</td><td>{{ showroom.area }}</td><td>{{ showroom.phone }}</td><td>{{ showroom.address }}</td><td>{{ showroom.o }}</td><td><a href="editShowroom/{{showroom.id}}">Изменить</a> | <a href="deleteShowroom/{{showroom.id}}">Удалить</a></td></tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</body>
+</html>

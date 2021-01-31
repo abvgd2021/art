@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Add Exhibition</title>
+</head>
+<body>
+    <script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+    </script>
+	<p><a href="/">На главную</a></p>
+    <form method="POST">
+        {% csrf_token %}
+    <table>
+        {{ form }}
+    </table>
+    <input type="submit" value="Добавить" >
+	{% if exhibitions.count > 0 %}
+    <h2>Список выставок</h2>
+    <table>
+        <tr><th>Дата</th><th>Тип</th><th>Выставочный зал</th><th>Работы участников</th><th></th></tr>
+        {% for exhibition in exhibitions %}
+        <tr><td>{{ exhibition.edate }}</td><td>{{ exhibition.etype }}</td><td>{{ exhibition.place }}</td><td width=200>{% for i in exhibition.artworks.all %} {{ i }}</br> {% endfor %}</td><td><a href="editExhibition/{{exhibition.id}}">Изменить</a> | <a href="deleteExhibition/{{exhibition.id}}">Удалить</a></td></tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</body>
+</html>
